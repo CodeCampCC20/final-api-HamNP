@@ -54,6 +54,6 @@ model DoctorNote {
   createAt DateTime @default(now())
   doctor   Doctor?  @relation(fields: [doctorId], references: [id])
   doctorId Int?     @map("doctor_id")
-  user     User?    @relation(fields: [userId], references: [id])
-  userId   Int?     @map("user_id")
+  user     User    @relation(fields: [userId], references: [id])
+  userId   Int     @map("user_id")
 }

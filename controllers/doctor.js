@@ -65,7 +65,113 @@ export const updateDoc = async (req,res,next) => {
   }
 }
 
+export async function createDocNote(req, res, next) {
+  try {
+    const { userId, note } = req.body;
 
+    const isUser = await prisma.user.findFirst({
+      where: {
+        id: Number(userId),
+      },
+    });
+
+    if (!isUser) {
+      createError(400, "User does not exist!!");
+    }
+
+    console.log(req.user);
+
+    await prisma.doctorNote.create({
+      data: {
+        userId: isUser.id,
+        note,
+        doctorId: req.user.id,
+      },
+    });
+
+    res.status(201).json({ message: "create doctor notes successfully" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getAllNotes(req, res, next) {
+  try {
+    const records = await prisma.doctorNote.findMany({
+      where: { doctorId: req.user.id },
+    });
+
+    res.status(200).json({ records });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getNoteByUserId(req, res, next) {
+  try {
+    const { id } = req.user;
+    const { userId } = req.params;
+    const NotesById = await prisma.doctorNote.findMany({
+      where: { doctorId: id, userId: Number(userId) },
+    });
+
+    res.status(200).json({ records: NotesById });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function updateNote(req, res, next) {
+  try {
+    const { id } = req.params;
+    const doctorId = req.user.id;
+    const { note } = req.body;
+
+    const isNote = await prisma.doctorNote.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!isNote) {
+      createError(400, "Note doesn't exist!!");
+    }
+
+    const NoteUpdated = await prisma.doctorNote.update({
+      where: {
+        doctorId,
+        id: Number(id),
+      },
+      data: {
+        note,
+      },
+    });
+
+    res.status(200).json({ NoteUpdated });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function deleteNote(req, res, next) {
+  try {
+    const { id } = req.params;
+    const isNote = await prisma.doctorNote.findFirst({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!isNote) {
+      createError(400, "Note doesn't exist!!");
+    }
+
+    await prisma.doctorNote.delete({ where: { id: Number(id) } });
+    res.status(200).json({ message: "Note deleted" });
+  } catch (error) {
+    next(error);
+  }
+}
 
 
 

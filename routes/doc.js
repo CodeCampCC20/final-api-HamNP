@@ -1,6 +1,6 @@
 import express from "express";
 //Controllers
-import { getMeDoc, updateDoc } from "../controllers/doctor.js";
+import { createDocNote, deleteNote, getAllNotes, getMeDoc, getNoteByUserId, updateDoc, updateNote } from "../controllers/doctor.js";
 
 //Middlewares
 import { authCheck } from "../middlewares/auth.middleware.js";
@@ -17,6 +17,16 @@ const docRouter = express.Router()
 docRouter.get("/doctors/me",authCheck,getMeDoc)
 
 docRouter.patch('/doctors/me',authCheck,updateDoc)
+
+docRouter.post('/doctor-notes',authCheck,createDocNote)
+
+docRouter.get('/doctor-notes/my-notes',authCheck,getAllNotes)
+
+docRouter.get('/doctor-notes/user/:userId',authCheck,getNoteByUserId)
+
+docRouter.patch('/doctor-notes/:id',authCheck,updateNote)
+
+docRouter.delete('/doctor-notes/:id',authCheck,deleteNote)
   
     
   

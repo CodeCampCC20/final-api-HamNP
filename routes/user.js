@@ -26,6 +26,8 @@ router.get('/health-records/:id',authCheck,getRecordById)
 router.patch('/health-records/:id',authCheck,updateRecord)
 
 router.delete('/health-records/:id',authCheck,deletedRecord)
+
+// router.get('/doctor-notes/received',authCheck,NoteFromDoc)
   
     
   
