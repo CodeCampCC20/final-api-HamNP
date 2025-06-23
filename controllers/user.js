@@ -1,5 +1,6 @@
 import { createError } from "../utils/createError.js"
 import prisma from "../config/prisma.js"
+import bcrypt from "bcryptjs";
 
 export const getMe = async (req,res,next) => {
   try {
@@ -25,7 +26,16 @@ export const updateUser = async (req,res,next) => {
     //1. Read params & body
     const {id} = req.user;
     const {username,password} = req.body;
-    console.log(id,username);
+    console.log(id,username,password);
+    const usernameCheck = await prisma.user.findFirst({
+      where: {
+        username:username
+      },
+    })
+    if(usernameCheck){
+      createError(400,"Username Already Exist!!")
+    }
+    const hashPassword = bcrypt.hashSync(password, 10);
     //2. Update to DB
     const update = await prisma.user.update({
       where: {
@@ -33,7 +43,8 @@ export const updateUser = async (req,res,next) => {
       },
       data:{
         username:username,
-        password:password
+        password:hashPassword
+
       },
       omit:{
         password:true
@@ -42,7 +53,7 @@ export const updateUser = async (req,res,next) => {
     })
 
     res.json({
-      message:`Update User name Successfully`,
+      message:`Update User username Successfully`,
       update
     })
   } catch (error) {

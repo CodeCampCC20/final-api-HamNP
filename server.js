@@ -5,6 +5,7 @@ import userRouter from "./routes/user.js"
 import authRouter from "./routes/auth.js"
 import error from "./utils/error.js";
 import { notFound } from "./utils/notfound.js";
+import docRouter from "./routes/doc.js";
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.use(morgan('dev'));
 app.use(express.json()); 
 
 app.use('/api',userRouter)
+app.use('/api',docRouter)
 app.use('/auth',authRouter)
 
 app.use(error)

@@ -62,8 +62,8 @@ export const loginUser = async (req, res, next) => {
         username: username,
       }
     })
-    console.log(user)
-    if (!user) {
+    console.log(username)
+    if (!username) {
       createError(400, "Username or Password is Invalid!!!")
     }
 

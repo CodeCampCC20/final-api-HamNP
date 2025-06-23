@@ -55,18 +55,17 @@ export const loginDoctor = async (req, res, next) => {
     //Step 2 Check body
    
 
-    const { username, password, specializationValue } = req.body;
+    const { username, password } = req.body;
 
     //Step 3 Check Username
 
     const user = await prisma.doctor.findFirst({
       where: {
         username: username,
-        specialization : specializationValue
       }
     })
-    console.log(user)
-    if (!user) {
+    console.log(username)
+    if (!username) {
       createError(400, "Username or Password is Invalid!!!")
     }
 

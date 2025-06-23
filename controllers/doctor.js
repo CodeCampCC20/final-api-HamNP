@@ -1,13 +1,14 @@
 import { createError } from "../utils/createError.js"
 import prisma from "../config/prisma.js"
+import bcrypt from "bcryptjs";
 
 
 
-export const getMe = async (req,res,next) => {
+export const getMeDoc = async (req,res,next) => {
   try {
     const {id} = req.user;
     console.log(id)
-    const user = await prisma.doctor.findFirst({
+    const doctor = await prisma.doctor.findFirst({
       where:{
         id:Number(id)
       },
@@ -15,19 +16,28 @@ export const getMe = async (req,res,next) => {
         password:true
       }
     })
-    res.json({result:user})
+    res.json({result:doctor})
   } catch (error) {
     next(error)
   }
 }
 
 
-export const updateUser = async (req,res,next) => {
+export const updateDoc = async (req,res,next) => {
   try {
     //1. Read params & body
     const {id} = req.user;
-    const {username,password} = req.body;
+    const {username,password,specialization} = req.body;
     console.log(id,username);
+    const usernameCheck = await prisma.doctor.findFirst({
+      where: {
+        username:username
+      },
+    })
+    if(usernameCheck){
+      createError(400,"Username Already Exist!!")
+    }
+    const hashPassword = bcrypt.hashSync(password, 10);
     //2. Update to DB
     const update = await prisma.doctor.update({
       where: {
@@ -35,7 +45,8 @@ export const updateUser = async (req,res,next) => {
       },
       data:{
         username:username,
-        password:password
+        password:hashPassword,
+        specialization:specialization,
       },
       omit:{
         password:true
@@ -44,10 +55,12 @@ export const updateUser = async (req,res,next) => {
     })
 
     res.json({
-      message:`Update User name Successfully`,
+      message:`Update Doctor username Successfully`,
       update
     })
   } catch (error) {
+
+
     next(error)
   }
 }

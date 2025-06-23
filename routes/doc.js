@@ -1,11 +1,12 @@
 import express from "express";
 //Controllers
-import { getMe, updateUser } from "../controllers/user.js";
+import { getMeDoc, updateDoc } from "../controllers/doctor.js";
+
 //Middlewares
 import { authCheck } from "../middlewares/auth.middleware.js";
 import prisma from "../config/prisma.js";
 
-const router = express.Router()
+const docRouter = express.Router()
 
 //ENDPOINT http://localhost:8000
 
@@ -13,9 +14,9 @@ const router = express.Router()
 
 
 
-router.get("/users/me",authCheck,getMe)
+docRouter.get("/doctors/me",authCheck,getMeDoc)
 
-router.patch('/users/me',authCheck,updateUser)
+docRouter.patch('/doctors/me',authCheck,updateDoc)
   
     
   
@@ -33,4 +34,4 @@ router.patch('/users/me',authCheck,updateUser)
 
 
     
-    export default router
+    export default docRouter
