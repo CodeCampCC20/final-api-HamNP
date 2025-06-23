@@ -18,11 +18,11 @@
 | [x] GET             | `/doctors/me`                | ดูข้อมูลตัวเอง                    | Doctor | 10                 |
 | [x] PATCH           | `/doctors/me`                | แก้ไขข้อมูลตัวเอง                 | Doctor | 5+2 (authenticate) |
 | **Health Records** |                              |                                   |        |
-| [] POST            | `/health-records`            | สร้างบันทึกสุขภาพ                 | User   | 5+2 (authenticate) |
-| [] GET             | `/health-records`            | ดูบันทึกสุขภาพทั้งหมด             | User   | 8+2 (authenticate) |
-| [] GET             | `/health-records/:id`        | ดูบันทึกสุขภาพเฉพาะของไอดี        | User   | 8+2 (authenticate) |
-| [] PATCH           | `/health-records/:id`        | แก้ไขบันทึกสุขภาพ                 | User   | 5+2 (authenticate) |
-| [] DELETE          | `/health-records/:id`        | ลบบันทึกสุขภาพ                    | User   | 5+2 (authenticate) |
+| [x] POST            | `/health-records`            | สร้างบันทึกสุขภาพ                 | User   | 5+2 (authenticate) |
+| [x] GET             | `/health-records`            | ดูบันทึกสุขภาพทั้งหมด             | User   | 8+2 (authenticate) |
+| [x] GET             | `/health-records/:id`        | ดูบันทึกสุขภาพเฉพาะของไอดี        | User   | 8+2 (authenticate) |
+| [x] PATCH           | `/health-records/:id`        | แก้ไขบันทึกสุขภาพ                 | User   | 5+2 (authenticate) |
+| [x] DELETE          | `/health-records/:id`        | ลบบันทึกสุขภาพ                    | User   | 5+2 (authenticate) |
 | **Doctor Notes**   |                              |                                   |        |
 | [] POST            | `/doctor-notes`              | สร้างบันทึกให้ผู้ป่วย             | Doctor | 5+2 (authenticate) |
 | [] GET             | `/doctor-notes/my-notes`     | ดูบันทึกที่เขียนทั้งหมด           | Doctor | 5+2 (authenticate) |
